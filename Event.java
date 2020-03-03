@@ -3,9 +3,9 @@ public abstract class Event {
 	
 	private double time;
 	
-	private State state;
+	public State state;
 	
-	private EventQueue eventQueue;
+	public EventQueue eventQueue;
 	
 	public Event(State state, int time, EventQueue eventQueue){
 		this.state = state;
@@ -19,3 +19,4 @@ public abstract class Event {
 		return this.time;
 	}
 }
+
