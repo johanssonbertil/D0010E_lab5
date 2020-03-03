@@ -3,8 +3,10 @@ public class StartEvent extends Event {
 	
 	private State state;
 	
-	public StartEvent(State state, int time) {
-		super(state, time);
+	private EventQueue eventQueue;
+	
+	public StartEvent(State state, int time, EventQueue eventQueue) {
+		super(state, time, eventQueue);
 	}
 
 	public void doEvent() {
