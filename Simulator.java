@@ -1,16 +1,16 @@
 
 public class Simulator {
-	private EventQueue queue = new EventQueue();
+	private EventQueue queue;
 	private State state;
 	
 	public Simulator(double lamda, long seed, int stopTime) {
-		this.seed = seed;
-		state = new State(lamda, seed);
-		queue.add(new StopEvent(stopTime));
+		state = new ShopState(lamda, seed);
+		queue = new EventQueue(state);
+		queue.add(new StopEvent(state, stopTime, queue));
 	}
 	
 	public void run() {
-		while (State.running) {
+		while (state.getRunning()) {
 			queue.nextEvent().doEvent();
 		}
 	}
