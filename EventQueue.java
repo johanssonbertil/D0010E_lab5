@@ -6,7 +6,7 @@ public class EventQueue {
 	
 	private State state;
 	
-	EventQueue(State state){
+	public EventQueue(State state){
 		this.state = state;
 		 eventArr = new ArrayList<Event>();
 	}
