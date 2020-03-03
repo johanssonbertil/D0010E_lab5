@@ -5,9 +5,12 @@ public abstract class Event {
 	
 	private State state;
 	
-	public Event(State state, int time){
+	private EventQueue eventQueue;
+	
+	public Event(State state, int time, EventQueue eventQueue){
 		this.state = state;
 		this.time = time;
+		this.eventQueue = eventQueue;
 	}
 
 	public abstract void doEvent();
@@ -16,4 +19,3 @@ public abstract class Event {
 		return this.time;
 	}
 }
-
