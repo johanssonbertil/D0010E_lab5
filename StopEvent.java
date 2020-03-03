@@ -1,8 +1,14 @@
 
 public class StopEvent extends Event {
 	
+	private State state;
+	
+	public StopEvent(State state, int time){
+		super(state, time);
+	}
+	
 	public void doEvent() {
-		ShopState.running = false;
+		state.setRunning(false);
 	}
 	
 	
