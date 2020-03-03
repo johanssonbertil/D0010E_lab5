@@ -1,7 +1,9 @@
-package lab5;
-
-public abstrclass ShoppingEvent extends Event {
+public abstract class ShoppingEvent extends Event {
 	
+	Customer customer;
 	
+	void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	
 }
