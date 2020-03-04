@@ -10,8 +10,7 @@ public class EventQueue {
 	public EventQueue(State state){
 
 		 eventArr = new ArrayList<Event>();
-	}
-	
+	}	
 	
 	public Event nextEvent() {
 		Event next = eventArr.get(0); 
@@ -26,6 +25,10 @@ public class EventQueue {
 			for(int i = 0; i < eventArr.size(); i++) {
 				if(eventArr.get(i).getTime() > e.getTime()) {
 					eventArr.add(i, e);
+					break;
+				}
+				else if(i == eventArr.size() - 1) {
+					eventArr.add(e);
 					break;
 				}
 			}

@@ -10,9 +10,16 @@ public class Simulator extends Observable{
 	private View view;
 	
 	public Simulator(State state) {
+		this.state = state;
 		queue = new EventQueue(state);
 		view = new View(this);
+		this.addObserver(view);
+		setChanged();
+		notifyObservers();
 		
+	}
+	public EventQueue getEventQueue() {
+		return queue;
 	}
 	
 	public void run() {
