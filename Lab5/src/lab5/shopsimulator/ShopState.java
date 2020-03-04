@@ -18,6 +18,7 @@ public class ShopState extends State {
     public int peopleWhoHaveQueued;
     public double queuingStartedTime;
     public boolean queuingStarted = false;
+    public boolean canEnter = true;
     public double checkoutsAvailableTotalTime;
 
     public CustomerFactory cFactory;
@@ -46,15 +47,22 @@ public class ShopState extends State {
     }
     
     public boolean customerArrived() { //Returns true if the customer successfully entered the store.
-    	if (currentCustomers >= maxCustomers) {
-    		customersLeft++;
+    	if(canEnter) {
+	    	if (currentCustomers >= maxCustomers) {
+	    		customersLeft++;
+	    		return false;
+	    		
+	    	}
+	    	else {
+	    		currentCustomers++;
+	    		return true;
+	    	}
+    	} else {
     		return false;
-    		
     	}
-    	else {
-    		currentCustomers++;
-    		return true;
-    	}
+    }
+    public void anotherCheckoutAvailable() {
+    	availableCheckouts++;
     }
 
 

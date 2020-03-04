@@ -22,6 +22,7 @@ public class PickUpEvent extends ShopEvent {
             ((ShopState)state).checkoutQueue.add(customer);
             if(!((ShopState)state).queuingStarted) {
             	((ShopState)state).queuingStartedTime = time;
+      
             }
         }
     }

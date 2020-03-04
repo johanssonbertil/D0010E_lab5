@@ -23,6 +23,8 @@ public class PayEvent extends ShopEvent {
             ((ShopState)state).peopleWhoHaveQueued++;
     	} else {
     		((ShopState)state).totalQueuingTime += time - ((ShopState)state).queuingStartedTime;
+    		((ShopState)state).anotherCheckoutAvailable();
+    		
     	}
     }
 
