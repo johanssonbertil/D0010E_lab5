@@ -10,5 +10,10 @@ public class StartEvent extends Event {
 	public void doEvent() {
 		state.setRunning(true);
 	}
-	
+
+	@Override
+	public String name() {
+		return "StartEvent";
+	}
+
 }

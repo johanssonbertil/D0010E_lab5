@@ -8,19 +8,20 @@ import lab5.genericsimulator.View;
 import lab5.genericsimulator.random.ExponentialRandomStream;
 import lab5.genericsimulator.random.UniformRandomStream;
 import lab5.shopsimulator.ShopState;
+import lab5.shopsimulator.shopevents.ArrivalEvent;
 import lab5.shopsimulator.shopevents.CloseEvent;
 
 public class Main {
 
 	public static void main(String[] args) {
-		
-		ExponentialRandomStream expR = new ExponentialRandomStream(0); // Skapar alla instanser av objekt som används
-		UniformRandomStream uniR = new UniformRandomStream(0, 100);
-		State state  = new ShopState(2000, expR, uniR);
-		Simulator sim = new Simulator(state);
-		
-		sim.getEventQueue().add(new StartEvent(state, 10, sim.getEventQueue())); // Lägger till 3 events till eventQueue och kör sedan simulatorn
-		sim.getEventQueue().add(new CloseEvent(state, 100, sim.getEventQueue()));
+		int seed = 1234;
+		ExponentialRandomStream expR = new ExponentialRandomStream(1, seed); // Skapar alla instanser av objekt som används
+		UniformRandomStream uniR = new UniformRandomStream(0.5, 1.0, seed);
+		ShopState state  = new ShopState(1500, expR, uniR);
+		Simulator sim = new Simulator(state);	
+		sim.getEventQueue().add(new StartEvent(state, 0, sim.getEventQueue()));
+		sim.getEventQueue().add(new ArrivalEvent(state, 1, sim.getEventQueue(), state.cFactory.getNextCustomer()));// Lägger till 3 events till eventQueue och kör sedan simulatorn
+		sim.getEventQueue().add(new CloseEvent(state, 10, sim.getEventQueue()));
 		sim.getEventQueue().add(new StopEvent(state, 1000, sim.getEventQueue()));
 		sim.run();
 		

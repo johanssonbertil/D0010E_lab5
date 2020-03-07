@@ -8,7 +8,6 @@ public class EventQueue {
 	
 	
 	public EventQueue(State state){
-
 		 eventArr = new ArrayList<Event>();
 	}	
 	
@@ -16,6 +15,9 @@ public class EventQueue {
 		Event next = eventArr.get(0); 
 		eventArr.remove(0);
 		return next;
+	}
+	public ArrayList<Event> getArr(){
+		return eventArr;
 	}
 	
 	public void add(Event e) {

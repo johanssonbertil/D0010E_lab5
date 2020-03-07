@@ -4,6 +4,7 @@ package lab5.shopsimulator;
 import lab5.shopsimulator.customer.Customer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class FIFO {
@@ -59,5 +60,14 @@ public class FIFO {
         }
         return stringToBuild.toString();
     }
+
+    public String toString2(){
+        int[] x = new int[fifoLst.size()];
+        for(int i = 0 ; i < fifoLst.size(); i++ ){
+            x[i] = fifoLst.get(i).getID();
+        }
+        return Arrays.toString(x);
+    }
+
 }
 

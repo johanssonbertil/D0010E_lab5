@@ -7,9 +7,14 @@ import lab5.shopsimulator.ShopState;
 import lab5.shopsimulator.customer.Customer;
 
 public class ArrivalEvent extends ShopEvent{
+	
+	private State state;
+	private double time;
 
 	public ArrivalEvent (State state, double time, EventQueue eventQueue, Customer customer) {
 		super(state, time, eventQueue, customer);
+		this.state = state;
+		this.time = time;
 	
 	}
 	public void doEvent() {
@@ -18,11 +23,16 @@ public class ArrivalEvent extends ShopEvent{
 			ArrivalEvent event = new ArrivalEvent(state, state.expRNG.next() + time,  eventQueue, ((ShopState)state).cFactory.getNextCustomer());
 			eventQueue.add(event);
 			if (((ShopState)state).customerArrived()) { //Customer successfully entered the store.
-				PickUpEvent pEvent = new PickUpEvent(state, state.uniRNG.next(), eventQueue, customer);
+				PickUpEvent pEvent = new PickUpEvent(state, state.uniRNG.next() + time, eventQueue, customer);
 				eventQueue.add(pEvent);
 			}
 		}
 		
+	}
+
+
+	public String name() {
+		return "Arrival";
 	}
 
 }

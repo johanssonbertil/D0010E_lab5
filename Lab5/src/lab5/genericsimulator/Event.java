@@ -18,6 +18,8 @@ public abstract class Event {
 	}
 
 	public abstract void doEvent();
+
+	public abstract String name();
 	
 	public double getTime() {
 		return this.time;

@@ -9,6 +9,11 @@ public class StopEvent extends Event {
 	public void doEvent() {
 		state.setRunning(false);
 	}
-	
-	
+
+	@Override
+	public String name() {
+		return "StopEvent";
+	}
+
+
 }

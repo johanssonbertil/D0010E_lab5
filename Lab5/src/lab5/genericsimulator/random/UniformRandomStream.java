@@ -7,12 +7,15 @@ import java.util.Random;
 public class UniformRandomStream{
 
 	private Random rand;
-	private double lower, width;
+	public double lower,upper, width;
+	public long seed;
 	
 	public UniformRandomStream(double lower, double upper, long seed) {
 		rand = new Random(seed);
 		this.lower = lower;
+		this.upper = upper;
 		this.width = upper-lower;
+		this.seed = seed;
 	}
 	
 	public UniformRandomStream(double lower, double upper) {

@@ -28,5 +28,10 @@ public class Simulator extends Observable{
 			setChanged();
 			notifyObservers();
 		}
+		
+	}
+
+	public State getState(){
+		return state;
 	}
 }

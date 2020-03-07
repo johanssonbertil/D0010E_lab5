@@ -7,12 +7,12 @@ import lab5.genericsimulator.*;
 import lab5.genericsimulator.random.ExponentialRandomStream;
 import lab5.genericsimulator.random.UniformRandomStream;
 public class ShopState extends State {
-    private int currentCustomers = 0;
-    private int successfulCustomers = 0;
-    private int customersLeft = 0;
-    private final int maxCustomers = 50;
-    private int availableCheckouts;
-    private final int totCheckouts = 4;
+    public int currentCustomers = 0;
+    public int successfulCustomers = 0;
+    public int customersLeft = 0;
+    public final int maxCustomers = 50;
+    public int availableCheckouts;
+    public final int totCheckouts = 4;
     public  double closeTime;
     public double totalQueuingTime;
     public int peopleWhoHaveQueued;

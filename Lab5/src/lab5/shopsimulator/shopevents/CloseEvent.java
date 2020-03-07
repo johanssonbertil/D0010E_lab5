@@ -17,6 +17,10 @@ public class CloseEvent extends Event {
 		((ShopState)state).canEnter = false;
 		
 	}
-	
+
+	public String name() {
+		return "CloseEvent";
+	}
+
 
 }
