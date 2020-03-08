@@ -14,12 +14,15 @@ public class CloseEvent extends Event {
 	}
 
 	public void doEvent() {
-		((ShopState)state).canEnter = false;
 		
 	}
 
 	public String name() {
 		return "Stänger";
+	}
+
+	public void changeState() {
+		((ShopState)state).canEnter = false;
 	}
 
 

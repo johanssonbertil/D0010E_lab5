@@ -1,5 +1,7 @@
 package lab5.genericsimulator;
 
+import lab5.shopsimulator.ShopState;
+import lab5.shopsimulator.shopevents.ArrivalEvent;
 
 public class StartEvent extends Event {
 	
@@ -14,6 +16,12 @@ public class StartEvent extends Event {
 	@Override
 	public String name() {
 		return "StartEvent";
+	}
+
+	@Override
+	public void changeState() {
+		state.setRunning(true);
+		
 	}
 
 }

@@ -20,28 +20,40 @@ public class PayEvent extends ShopEvent {
 
     public void doEvent(){
     	
+    	
     	shopState = ((ShopState)state);
+    	
+    	if(shopState.checkOutAvailable()) {
+			shopState.updatecheckoutsAvailableTotalTime(this);
+		} else {
+			shopState.updateTotalQueueingTime(this);
+		}
+    	
     	
     	if(!shopState.checkoutQueue.isEmpty()) {
     		Customer nextCustomer = shopState.checkoutQueue.first();
-    		shopState.checkoutQueue.removeFirst();
+    		
     		PayEvent event = new PayEvent(state, shopState.uniPay.next() + time, eventQueue, nextCustomer);
             eventQueue.add(event);
-            shopState.peopleWhoHaveQueued++;
     	} else {
-    		if(shopState.checkOutAvailable()) {
-    			shopState.checkoutsAvailableTotalTime += time * shopState.availableCheckouts - shopState.checkoutsAvailableStartTime;
-    			shopState.checkoutsAvailableStartTime = time;
-    		}
-    		shopState.totalQueuingTime += time - shopState.queuingStartedTime;
-    		shopState.anotherCheckoutAvailable();
-    		
+    		shopState.customerLeavesCheckout();
     	}
     }
 
-	@Override
+	
 	public String name() {
 		return "Betalning";
 	}
 
+	
+	public void changeState() {
+		
+		shopState = ((ShopState)state);
+		
+		if(!shopState.checkoutQueue.isEmpty()) {
+			shopState.checkoutQueue.removeFirst();
+			
+		}
+
+	}
 }

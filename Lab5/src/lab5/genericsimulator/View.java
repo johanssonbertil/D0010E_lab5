@@ -29,8 +29,7 @@ public class View implements Observer{
 
 
 	public String lineBuilder(String tid, String event, String kund, String status, String led, String ledT, String currentCustomers,
-
-								String cashOuts, String sadCustomers, String customersQued, String queTime, String köar, String queSize ){
+							String cashOuts, String sadCustomers, String customersQued, String queTime, String köar, String queSize ){
 		return (tid +"   "+ event +"   "+ kund +"   "+ status +"   "+ led +"   "+ ledT +"   "+ currentCustomers +"   "+ cashOuts
 				+"   "+ sadCustomers +"   "+ customersQued +"   "+ queTime +"   "+ köar +"   "+ queSize );
 	}
@@ -48,15 +47,17 @@ public class View implements Observer{
 				"==========";
 	}
 	public String endLine(){
+		DecimalFormat df = new DecimalFormat("0.00");
+		df.setMaximumFractionDigits(2);
 		return "RESULTAT\n" + 
 				"========\n" + 
-				"1) Av " + 0 + " kunder handlade " +
+				"1) Av " + shopState.totalCustomers + " kunder handlade " +
 				shopState.successfulCustomers + " medan " + shopState.customersLeft + " missades.\n" + 
-				"2) Total tid 2 kassor varit lediga: 6,11 te.\n" + 
-				" Genomsnittlig ledig kassatid: 3,06 te (dvs 23,03% av tiden från öppning tills sista kunden\n" + 
+				"2) Total tid 2 kassor varit lediga: "+ df.format(shopState.checkoutsAvailableTotalTime) +" te.\n" + 
+				" Genomsnittlig ledig kassatid: "+ df.format(shopState.checkoutsAvailableTotalTime / shopState.totCheckouts)+" te (dvs "+ df.format(((shopState.checkoutsAvailableTotalTime / shopState.totCheckouts) / event.getTime()) * 100.00) + " % av tiden från öppning tills sista kunden\n" + 
 				"betalat).\n" + 
-				"3) Total tid 5 kunder tvingats köa: 13,60 te.\n" + 
-				" Genomsnittlig kötid: 2,72 te.";
+				"3) Total tid "+ shopState.peopleWhoHaveQueued + " kunder tvingats köa: "+ df.format(shopState.totalQueuingTime) +  " te \n" + 
+				" Genomsnittlig kötid: "+ df.format(shopState.totalQueuingTime / shopState.peopleWhoHaveQueued) +" te.";
 	}
 
 
@@ -64,6 +65,8 @@ public class View implements Observer{
 	public void update(Observable arg0, Object arg1) {
 		state = sim.getState();
 		shopState = ((ShopState) state);
+		DecimalFormat df = new DecimalFormat("0.00");
+		df.setMaximumFractionDigits(2);
 		
 		if(!shopState.getRunning()) {
 			
@@ -78,8 +81,7 @@ public class View implements Observer{
 			System.out.println(endLine());
 	
 		} else {
-			DecimalFormat df = new DecimalFormat("0.00");
-			df.setMaximumFractionDigits(2);
+			
 				event = sim.event;
 				if(event instanceof ShopEvent) {
 				shopEvent = (ShopEvent)event;

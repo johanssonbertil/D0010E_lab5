@@ -47,6 +47,9 @@ public class FIFO {
     public int getSize(){
         return fifoLst.size();
     }
+    public Customer getCustomer(int i) {
+    	return fifoLst.get(i);
+    }
 
     public String toString(){
         StringBuilder stringToBuild = new StringBuilder("Queue: ");

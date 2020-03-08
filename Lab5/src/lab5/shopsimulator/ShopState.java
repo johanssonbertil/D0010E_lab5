@@ -16,15 +16,18 @@ public class ShopState extends State {
     public  double closeTime;
     public double totalQueuingTime;
     public int peopleWhoHaveQueued;
-    public double queuingStartedTime;
+    public double queuingPreviousTime;
+    public double lastEventTime;
     public boolean queuingStarted = false;
     public boolean canEnter = true;
+    public boolean stateChanged = false;
     public double checkoutsAvailableTotalTime;
-    public double checkoutsAvailableStartTime;
+    public double checkoutsAvailablePreviousTime;
 
     public CustomerFactory cFactory;
     public FIFO checkoutQueue;
     public UniformRandomStream uniPick, uniPay;
+	public int totalCustomers;
 
 
     public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1, UniformRandomStream uni2){
@@ -53,22 +56,29 @@ public class ShopState extends State {
     public boolean customerArrived() { //Returns true if the customer successfully entered the store.
     	if(canEnter) {
 	    	if (currentCustomers >= maxCustomers) {
+	    		totalCustomers++;
 	    		customersLeft++;
 	    		return false;
 	    		
 	    	}
 	    	else {
+	    		if(stateChanged) {
+	    		totalCustomers++;
 	    		currentCustomers++;
+	    		}
 	    		return true;
 	    	}
     	} else {
     		return false;
     	}
     }
-    public void anotherCheckoutAvailable() {
-    	availableCheckouts++;
+    public void updateTotalQueueingTime(Event e) {
+    	totalQueuingTime += (e.getTime() - queuingPreviousTime) * checkoutQueue.getSize();
+    	queuingPreviousTime = e.getTime();
     }
-
-
+    public void updatecheckoutsAvailableTotalTime(Event e) {
+    	checkoutsAvailableTotalTime += (e.getTime() - checkoutsAvailablePreviousTime) * availableCheckouts;
+		checkoutsAvailablePreviousTime = e.getTime();
+    }
 }
 

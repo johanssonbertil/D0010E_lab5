@@ -15,5 +15,11 @@ public class StopEvent extends Event {
 		return "StopEvent";
 	}
 
+	@Override
+	public void changeState() {
+		
+		
+	}
+
 
 }

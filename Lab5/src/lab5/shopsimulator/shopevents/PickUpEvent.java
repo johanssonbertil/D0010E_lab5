@@ -24,20 +24,13 @@ public class PickUpEvent extends ShopEvent {
     	shopState = ((ShopState)state);
     	
         if(shopState.checkOutAvailable()){
-        	shopState.checkoutsAvailableTotalTime += time * shopState.availableCheckouts - shopState.checkoutsAvailableStartTime;
-			shopState.checkoutsAvailableStartTime = time;
-        	shopState.customerGoesToCheckout();
+        	shopState.updatecheckoutsAvailableTotalTime(this);
+        	
             PayEvent event = new PayEvent(state, shopState.uniPay.next() + time, eventQueue, customer);
             eventQueue.add(event);
-        }
-        else{
-        	shopState.checkoutQueue.add(customer);
-            if(!shopState.queuingStarted) {
-            	shopState.queuingStartedTime = time;
-            	shopState.queuingStarted = true;
-            } else {
-            	shopState.totalQueuingTime += time - shopState.queuingStartedTime;
-            }
+            
+        } else {
+        	shopState.updateTotalQueueingTime(this);
         }
     }
 
@@ -45,4 +38,20 @@ public class PickUpEvent extends ShopEvent {
     public String name() {
         return "Plock";
     }
+	@Override
+	public void changeState() {
+		
+		shopState = ((ShopState)state);
+    	
+        if(shopState.checkOutAvailable()){
+        	
+        	shopState.customerGoesToCheckout();
+        	
+        } else{
+        	
+            shopState.checkoutQueue.add(customer);
+            shopState.peopleWhoHaveQueued++;
+        }
+		
+	}
 }

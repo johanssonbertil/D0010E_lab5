@@ -15,8 +15,6 @@ public class Simulator extends Observable{
 		queue = new EventQueue(state);
 		view = new View(this);
 		this.addObserver(view);
-		//setChanged();
-		//notifyObservers();
 		
 	}
 	public EventQueue getEventQueue() {
@@ -25,12 +23,15 @@ public class Simulator extends Observable{
 	
 	public void run() {
 		while (state.getRunning()) {
-			event = queue.nextEvent();
-			event.doEvent();
-			setChanged();
-			notifyObservers();
-			
-			
+			try {
+				event = queue.nextEvent();
+				event.doEvent();
+				setChanged();
+				notifyObservers();
+				event.changeState();
+			} catch(NullPointerException n) {
+			}
+					
 		}
 
 		

@@ -23,31 +23,36 @@ public class ArrivalEvent extends ShopEvent{
 	public void doEvent() {
 		
 		shopState = ((ShopState)state);
-
+		
 		if (state.getRunning()) {
 			if(shopState.checkOutAvailable()) {
-				shopState.checkoutsAvailableTotalTime += time * shopState.availableCheckouts - shopState.checkoutsAvailableStartTime;
-				shopState.checkoutsAvailableStartTime = time;
+				shopState.updatecheckoutsAvailableTotalTime(this);
 				
 			} else {
-				shopState.totalQueuingTime += time - shopState.queuingStartedTime;
-			}
-			if(shopState.canEnter) {
-				ArrivalEvent event = new ArrivalEvent(state, state.expRNG.next() + time,  eventQueue, shopState.cFactory.getNextCustomer());
-				eventQueue.add(event);
-			}
-			
-			if (shopState.customerArrived()) { //Customer successfully entered the store.
-				PickUpEvent pEvent = new PickUpEvent(state, shopState.uniPick.next() + time, eventQueue, customer);
-				eventQueue.add(pEvent);
+				shopState.updateTotalQueueingTime(this);
 			}
 		}
+		if(shopState.canEnter) {
+			ArrivalEvent event = new ArrivalEvent(state, state.expRNG.next() + time,  eventQueue, shopState.cFactory.getNextCustomer());
+			eventQueue.add(event);
+		}
 		
+		if (shopState.customerArrived()) { //Customer successfully entered the store.
+			PickUpEvent pEvent = new PickUpEvent(state, shopState.uniPick.next() + time, eventQueue, customer);
+			eventQueue.add(pEvent);
+			shopState.stateChanged = true;
+		}
 	}
+		
 
 
 	public String name() {
 		return "Ankomst";
 	}
-
+	
+	public void changeState() {
+		
+		shopState = ((ShopState)state);
+	
+	}
 }

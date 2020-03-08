@@ -18,6 +18,8 @@ public abstract class Event {
 	}
 
 	public abstract void doEvent();
+	
+	public abstract void changeState();
 
 	public abstract String name();
 	

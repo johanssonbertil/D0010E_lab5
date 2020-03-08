@@ -19,10 +19,10 @@ public class Main {
 		UniformRandomStream uniPick = new UniformRandomStream(0.5, 1.0, seed);
 		UniformRandomStream uniPay = new UniformRandomStream(2.0, 3.0, seed);
 		ShopState state  = new ShopState(1000, expR, uniPick, uniPay);
-		Simulator sim = new Simulator(state);	
+		Simulator sim = new Simulator(state);
 		sim.getEventQueue().add(new StartEvent(state, 0, sim.getEventQueue()));
-		sim.getEventQueue().add(new ArrivalEvent(state, 0.44, sim.getEventQueue(), state.cFactory.getNextCustomer()));// Lägger till 3 events till eventQueue och kör sedan simulatorn
-		sim.getEventQueue().add(new CloseEvent(state, 10, sim.getEventQueue()));
+		sim.getEventQueue().add(new ArrivalEvent(state, state.expRNG.next(), sim.getEventQueue(), state.cFactory.getNextCustomer()));
+		sim.getEventQueue().add(new CloseEvent(state, 10.0, sim.getEventQueue()));
 		sim.getEventQueue().add(new StopEvent(state, 999, sim.getEventQueue()));
 		sim.run();
 		
