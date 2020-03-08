@@ -23,6 +23,12 @@ public class UniformRandomStream{
 	    this.lower = lower;
 	    this.width = upper-lower;
 	}
+	public void setLower(double lower) {
+		this.lower = lower;
+	}
+	public void setUpper(double upper) {
+		this.upper = upper;
+	}
 	
 	public double next() {
 	    return lower+rand.nextDouble()*width;

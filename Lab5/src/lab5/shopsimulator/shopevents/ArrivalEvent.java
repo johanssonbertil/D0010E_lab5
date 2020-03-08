@@ -10,11 +10,13 @@ public class ArrivalEvent extends ShopEvent{
 	
 	private State state;
 	private double time;
+	public Customer customer;
 
 	public ArrivalEvent (State state, double time, EventQueue eventQueue, Customer customer) {
 		super(state, time, eventQueue, customer);
 		this.state = state;
 		this.time = time;
+		this.customer = customer;
 	
 	}
 	public void doEvent() {
@@ -32,7 +34,7 @@ public class ArrivalEvent extends ShopEvent{
 
 
 	public String name() {
-		return "Arrival";
+		return "Ankomst";
 	}
 
 }

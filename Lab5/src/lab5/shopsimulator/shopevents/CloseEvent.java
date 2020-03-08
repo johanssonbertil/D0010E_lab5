@@ -19,7 +19,7 @@ public class CloseEvent extends Event {
 	}
 
 	public String name() {
-		return "CloseEvent";
+		return "Stänger";
 	}
 
 

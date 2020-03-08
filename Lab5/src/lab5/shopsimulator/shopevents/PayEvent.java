@@ -19,10 +19,11 @@ public class PayEvent extends ShopEvent {
 
     public void doEvent(){
     	
-    	((ShopState)state).customerLeavesCheckout();
     	if(!((ShopState)state).checkoutQueue.isEmpty()) {
     		Customer nextCustomer = ((ShopState)state).checkoutQueue.first();
     		((ShopState)state).checkoutQueue.removeFirst();
+    		state.uniRNG.setLower(2.0);
+        	state.uniRNG.setUpper(3.0);
     		PayEvent event = new PayEvent(state, state.uniRNG.next() + time, eventQueue, nextCustomer);
             eventQueue.add(event);
             ((ShopState)state).peopleWhoHaveQueued++;
@@ -35,7 +36,7 @@ public class PayEvent extends ShopEvent {
 
 	@Override
 	public String name() {
-		return "PayEvent";
+		return "Betalning";
 	}
 
 }

@@ -10,16 +10,20 @@ public class PickUpEvent extends ShopEvent {
 	
 	private State state;
 	private double time;
+	public Customer customer;
 	
     public PickUpEvent(State state, double time, EventQueue eventQueue, Customer customer){
     	super(state, time, eventQueue, customer);
     	this.state = state;
     	this.time = time;
+    	this.customer = customer;
     }
     public void doEvent(){
     	
         if(((ShopState)state).checkOutAvailable()){
         	((ShopState)state).customerGoesToCheckout();
+        	state.uniRNG.setLower(0.5);
+        	state.uniRNG.setUpper(1.0);
             PayEvent event = new PayEvent(state, state.uniRNG.next() + time, eventQueue, customer);
             eventQueue.add(event);
         }
@@ -34,6 +38,6 @@ public class PickUpEvent extends ShopEvent {
 
     @Override
     public String name() {
-        return "PickUpEvent";
+        return "Plock";
     }
 }

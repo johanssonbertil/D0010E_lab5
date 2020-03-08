@@ -5,17 +5,15 @@ import lab5.genericsimulator.State;
 import lab5.shopsimulator.customer.Customer;
 
 public abstract class ShopEvent extends Event {
-	State  state;
-	Customer customer;
+	public State  state;
+	public Customer customer;
 	int time;
 	
 	public ShopEvent (State state, double time, EventQueue eventQueue, Customer c) {
 		super(state, time, eventQueue);
 		customer = c;
 	}
-	void setCustomer(Customer customer) {
-		
-		
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 	
