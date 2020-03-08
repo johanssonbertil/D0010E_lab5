@@ -30,6 +30,7 @@ public class Simulator extends Observable{
 			setChanged();
 			notifyObservers();
 			
+			
 		}
 
 		

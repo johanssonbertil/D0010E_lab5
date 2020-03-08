@@ -10,9 +10,9 @@ public class ShopState extends State {
     public int currentCustomers = 0;
     public int successfulCustomers = 0;
     public int customersLeft = 0;
-    public final int maxCustomers = 50;
+    public final int maxCustomers = 5;
     public int availableCheckouts;
-    public final int totCheckouts = 4;
+    public final int totCheckouts = 2;
     public  double closeTime;
     public double totalQueuingTime;
     public int peopleWhoHaveQueued;
@@ -20,13 +20,17 @@ public class ShopState extends State {
     public boolean queuingStarted = false;
     public boolean canEnter = true;
     public double checkoutsAvailableTotalTime;
+    public double checkoutsAvailableStartTime;
 
     public CustomerFactory cFactory;
     public FIFO checkoutQueue;
+    public UniformRandomStream uniPick, uniPay;
 
 
-    public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni){
-    		super(maxT, exp, uni);
+    public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1, UniformRandomStream uni2){
+    		super(maxT, exp, uni1);
+    		uniPick = uni1;
+    		uniPay = uni2;
     		cFactory = new CustomerFactory();
     		checkoutQueue = new FIFO();
     		availableCheckouts = totCheckouts;

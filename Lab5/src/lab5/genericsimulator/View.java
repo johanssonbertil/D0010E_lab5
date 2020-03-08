@@ -36,14 +36,14 @@ public class View implements Observer{
 	}
 
 	public String headLine(){
-		return "PARAMETRAR \n " +
-				"========== \n " +
-		"Antal kassor, N..........:"+ ((ShopState) state).totCheckouts + "\n"  +
-		"Max som ryms, M..........:" + ((ShopState) state).maxCustomers + "\n" +
-		"Ankomshastighet, lambda..:" + ((ShopState) state).expRNG.lambda + "\n" +
-		"Plocktider, [P_min..Pmax]:" + "[0.5...1.0]" + "\n" +
-		"Betaltider, [K_min..Kmax]:" + "[2.0...3.0]" + "\n" +
-		"Frö, f...................:"+ ((ShopState) state).uniRNG.seed + "\n" +
+		return "PARAMETRAR \n" +
+				"========== \n" +
+		"Antal kassor, N..........:"+ shopState.totCheckouts + "\n"  +
+		"Max som ryms, M..........:" + shopState.maxCustomers + "\n" +
+		"Ankomshastighet, lambda..:" + shopState.expRNG.lambda + "\n" +
+		"Plocktider, [P_min..Pmax]:" + "["+ shopState.uniPick.lower + ".." + shopState.uniPick.upper +"]" + "\n" +
+		"Betaltider, [K_min..Kmax]:" + "["+ shopState.uniPay.lower + ".." + shopState.uniPay.upper +"]" + "\n" +
+		"Frö, f...................:"+ shopState.uniRNG.seed + "\n" +
 		"FÖRLOPP \n" +
 				"==========";
 	}
@@ -74,7 +74,7 @@ public class View implements Observer{
 			for(int i = 1; i < stringArr.size(); i++) {
 				System.out.println(stringArr.get(i));
 			}
-			System.out.println("50.00   Stop");
+			System.out.println("999.00  Stop");
 			System.out.println(endLine());
 	
 		} else {
@@ -91,14 +91,14 @@ public class View implements Observer{
 				}
 				stringArr.add(lineBuilder(String.format("%-5s", df.format(shopEvent.getTime())), String.format("%-10s",shopEvent.name()), String.format("%-3s",shopEvent.customer.getID()),
 						String.format("%-5s",openString), String.format("%-5s",shopState.availableCheckouts),
-						String.format("%-5s",shopState.checkoutsAvailableTotalTime), String.format("%-5s",shopState.currentCustomers),
+						String.format("%-5s",df.format(shopState.checkoutsAvailableTotalTime)), String.format("%-5s",shopState.currentCustomers),
 						String.format("%-3s",shopState.successfulCustomers), String.format("%-5s",shopState.customersLeft),
 						String.format("%-5s",shopState.peopleWhoHaveQueued), String.format("%-5s",df.format(shopState.totalQueuingTime)),
 						String.format("%-5s",shopState.checkoutQueue.getSize()) , shopState.checkoutQueue.toString2()));
 				} else {
 					stringArr.add(lineBuilder(String.format("%-5s",df.format(event.getTime())), String.format("%-10s",event.name()), String.format("%-3s","---"),
 							String.format("%-5s",openString), String.format("%-5s",shopState.availableCheckouts),
-							String.format("%-5s",shopState.checkoutsAvailableTotalTime), String.format("%-5s",shopState.currentCustomers),
+							String.format("%-5s",df.format(shopState.checkoutsAvailableTotalTime)), String.format("%-5s",shopState.currentCustomers),
 							String.format("%-3s",shopState.successfulCustomers), String.format("%-5s",shopState.customersLeft),
 							String.format("%-5s",shopState.peopleWhoHaveQueued), String.format("%-5s",df.format(shopState.totalQueuingTime)),
 							String.format("%-5s",shopState.checkoutQueue.getSize()) , shopState.checkoutQueue.toString2()));

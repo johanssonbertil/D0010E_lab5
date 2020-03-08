@@ -14,12 +14,12 @@ public abstract class State implements Observer {
     public ExponentialRandomStream expRNG;
     public UniformRandomStream uniRNG;
 
-    public State(double maxT, ExponentialRandomStream exp, UniformRandomStream uni) {
+    public State(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1) {
     	runningTime = 0;
     	running = true;
     	maxTime = maxT;
     	expRNG = exp;
-    	uniRNG = uni;
+    	uniRNG = uni1;
     }
     
     

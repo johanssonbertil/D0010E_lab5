@@ -9,6 +9,7 @@ public class PayEvent extends ShopEvent {
 	
 	private State state;
 	private double time;
+	private ShopState shopState;
 
     public PayEvent(State state, double time, EventQueue eventQueue, Customer customer) {
     	super(state, time, eventQueue, customer);
@@ -19,17 +20,21 @@ public class PayEvent extends ShopEvent {
 
     public void doEvent(){
     	
-    	if(!((ShopState)state).checkoutQueue.isEmpty()) {
-    		Customer nextCustomer = ((ShopState)state).checkoutQueue.first();
-    		((ShopState)state).checkoutQueue.removeFirst();
-    		state.uniRNG.setLower(2.0);
-        	state.uniRNG.setUpper(3.0);
-    		PayEvent event = new PayEvent(state, state.uniRNG.next() + time, eventQueue, nextCustomer);
+    	shopState = ((ShopState)state);
+    	
+    	if(!shopState.checkoutQueue.isEmpty()) {
+    		Customer nextCustomer = shopState.checkoutQueue.first();
+    		shopState.checkoutQueue.removeFirst();
+    		PayEvent event = new PayEvent(state, shopState.uniPay.next() + time, eventQueue, nextCustomer);
             eventQueue.add(event);
-            ((ShopState)state).peopleWhoHaveQueued++;
+            shopState.peopleWhoHaveQueued++;
     	} else {
-    		((ShopState)state).totalQueuingTime += time - ((ShopState)state).queuingStartedTime;
-    		((ShopState)state).anotherCheckoutAvailable();
+    		if(shopState.checkOutAvailable()) {
+    			shopState.checkoutsAvailableTotalTime += time * shopState.availableCheckouts - shopState.checkoutsAvailableStartTime;
+    			shopState.checkoutsAvailableStartTime = time;
+    		}
+    		shopState.totalQueuingTime += time - shopState.queuingStartedTime;
+    		shopState.anotherCheckoutAvailable();
     		
     	}
     }

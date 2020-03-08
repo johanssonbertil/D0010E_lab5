@@ -11,6 +11,7 @@ public class PickUpEvent extends ShopEvent {
 	private State state;
 	private double time;
 	public Customer customer;
+	private ShopState shopState;
 	
     public PickUpEvent(State state, double time, EventQueue eventQueue, Customer customer){
     	super(state, time, eventQueue, customer);
@@ -20,18 +21,22 @@ public class PickUpEvent extends ShopEvent {
     }
     public void doEvent(){
     	
-        if(((ShopState)state).checkOutAvailable()){
-        	((ShopState)state).customerGoesToCheckout();
-        	state.uniRNG.setLower(0.5);
-        	state.uniRNG.setUpper(1.0);
-            PayEvent event = new PayEvent(state, state.uniRNG.next() + time, eventQueue, customer);
+    	shopState = ((ShopState)state);
+    	
+        if(shopState.checkOutAvailable()){
+        	shopState.checkoutsAvailableTotalTime += time * shopState.availableCheckouts - shopState.checkoutsAvailableStartTime;
+			shopState.checkoutsAvailableStartTime = time;
+        	shopState.customerGoesToCheckout();
+            PayEvent event = new PayEvent(state, shopState.uniPay.next() + time, eventQueue, customer);
             eventQueue.add(event);
         }
         else{
-            ((ShopState)state).checkoutQueue.add(customer);
-            if(!((ShopState)state).queuingStarted) {
-            	((ShopState)state).queuingStartedTime = time;
-      
+        	shopState.checkoutQueue.add(customer);
+            if(!shopState.queuingStarted) {
+            	shopState.queuingStartedTime = time;
+            	shopState.queuingStarted = true;
+            } else {
+            	shopState.totalQueuingTime += time - shopState.queuingStartedTime;
             }
         }
     }
