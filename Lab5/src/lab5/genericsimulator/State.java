@@ -7,12 +7,14 @@ import lab5.genericsimulator.random.*;
 
 
 
-public abstract class State implements Observer {
+public abstract class State extends Observable {
     private double runningTime;
     public double maxTime;
     private boolean running;
     public ExponentialRandomStream expRNG;
     public UniformRandomStream uniRNG;
+	public View view;
+	public Event event;
 
     public State(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1) {
     	runningTime = 0;
@@ -20,6 +22,8 @@ public abstract class State implements Observer {
     	maxTime = maxT;
     	expRNG = exp;
     	uniRNG = uni1;
+    	view = new View(this);
+    	this.addObserver(view);
     }
     
     
@@ -34,10 +38,9 @@ public abstract class State implements Observer {
     public void setRunning(boolean x){
         running = x;
     }
-
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public void updateObs(Event e) {
+    	setChanged();
+    	notifyObservers(e);
     }
-    
+   
 }

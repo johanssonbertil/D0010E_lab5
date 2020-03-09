@@ -22,16 +22,21 @@ public class ArrivalEvent extends ShopEvent{
 	}
 	public void doEvent() {
 		
-		shopState = ((ShopState)state);
 		
+		shopState = ((ShopState)state);
+
 		if (state.getRunning()) {
 			if(shopState.checkOutAvailable()) {
-				shopState.updatecheckoutsAvailableTotalTime(this);
+				shopState.updatecheckoutsAvailableTotalTime(time);
 				
 			} else {
-				shopState.updateTotalQueueingTime(this);
+				shopState.updateTotalQueueingTime(time);
 			}
+			
 		}
+		
+		shopState.updateObs(this);
+		
 		if(shopState.canEnter) {
 			ArrivalEvent event = new ArrivalEvent(state, state.expRNG.next() + time,  eventQueue, shopState.cFactory.getNextCustomer());
 			eventQueue.add(event);
@@ -40,7 +45,6 @@ public class ArrivalEvent extends ShopEvent{
 		if (shopState.customerArrived()) { //Customer successfully entered the store.
 			PickUpEvent pEvent = new PickUpEvent(state, shopState.uniPick.next() + time, eventQueue, customer);
 			eventQueue.add(pEvent);
-			shopState.stateChanged = true;
 		}
 	}
 		
@@ -50,9 +54,5 @@ public class ArrivalEvent extends ShopEvent{
 		return "Ankomst";
 	}
 	
-	public void changeState() {
-		
-		shopState = ((ShopState)state);
-	
-	}
+
 }

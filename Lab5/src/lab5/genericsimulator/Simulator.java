@@ -1,21 +1,19 @@
 package lab5.genericsimulator;
+import java.io.IOException;
 import java.util.Observable;
 
 import lab5.shopsimulator.ShopState;
 
 
-public class Simulator extends Observable{
+public class Simulator{
 	private EventQueue queue;
 	private State state;
-	private View view;
+
 	public Event event;
 	
 	public Simulator(State state) {
 		this.state = state;
-		queue = new EventQueue(state);
-		view = new View(this);
-		this.addObserver(view);
-		
+		queue = new EventQueue(state);		
 	}
 	public EventQueue getEventQueue() {
 		return queue;
@@ -23,14 +21,12 @@ public class Simulator extends Observable{
 	
 	public void run() {
 		while (state.getRunning()) {
-			try {
-				event = queue.nextEvent();
-				event.doEvent();
-				setChanged();
-				notifyObservers();
-				event.changeState();
-			} catch(NullPointerException n) {
-			}
+			
+			event = queue.nextEvent();
+			
+			event.doEvent();
+		
+		
 					
 		}
 

@@ -1,6 +1,7 @@
 package lab5.genericsimulator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EventQueue {
 
@@ -41,4 +42,16 @@ public class EventQueue {
 	public void remove(Event e) {
 		eventArr.remove(e);
 	}
+	
+	public int size() {
+		return eventArr.size();
+	}
+	
+	public String toString(){
+        String[] x = new String[eventArr.size()];
+        for(int i = 0 ; i < eventArr.size(); i++ ){
+            x[i] = eventArr.get(i).name();
+        }
+        return Arrays.toString(x);
+    }
 }

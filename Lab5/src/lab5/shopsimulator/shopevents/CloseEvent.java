@@ -15,15 +15,12 @@ public class CloseEvent extends Event {
 
 	public void doEvent() {
 		
-	}
-
-	public String name() {
-		return "St‰nger";
-	}
-
-	public void changeState() {
+		((ShopState)state).updateObs(this);
+		
 		((ShopState)state).canEnter = false;
 	}
 
-
+	public String name() {
+		return "St√§nger";
+	}
 }

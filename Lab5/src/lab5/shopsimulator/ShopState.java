@@ -14,20 +14,19 @@ public class ShopState extends State {
     public int availableCheckouts;
     public final int totCheckouts = 2;
     public  double closeTime;
-    public double totalQueuingTime;
-    public int peopleWhoHaveQueued;
-    public double queuingPreviousTime;
-    public double lastEventTime;
+    public double totalQueuingTime = 0;
+    public int peopleWhoHaveQueued = 0;
+    public double queuingPreviousTime = 0;
+    public double lastEventTime = 0;
     public boolean queuingStarted = false;
     public boolean canEnter = true;
-    public boolean stateChanged = false;
-    public double checkoutsAvailableTotalTime;
-    public double checkoutsAvailablePreviousTime;
+    public double checkoutsAvailableTotalTime = 0;
+    public double checkoutsAvailablePreviousTime = 0;
 
     public CustomerFactory cFactory;
     public FIFO checkoutQueue;
     public UniformRandomStream uniPick, uniPay;
-	public int totalCustomers;
+	public int totalCustomers = 0;
 
 
     public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1, UniformRandomStream uni2){
@@ -62,23 +61,21 @@ public class ShopState extends State {
 	    		
 	    	}
 	    	else {
-	    		if(stateChanged) {
 	    		totalCustomers++;
 	    		currentCustomers++;
-	    		}
 	    		return true;
 	    	}
     	} else {
     		return false;
     	}
     }
-    public void updateTotalQueueingTime(Event e) {
-    	totalQueuingTime += (e.getTime() - queuingPreviousTime) * checkoutQueue.getSize();
-    	queuingPreviousTime = e.getTime();
+    public void updateTotalQueueingTime(double time) {
+    	totalQueuingTime += (time - queuingPreviousTime) * checkoutQueue.getSize();
+    	queuingPreviousTime = time;
     }
-    public void updatecheckoutsAvailableTotalTime(Event e) {
-    	checkoutsAvailableTotalTime += (e.getTime() - checkoutsAvailablePreviousTime) * availableCheckouts;
-		checkoutsAvailablePreviousTime = e.getTime();
+    public void updatecheckoutsAvailableTotalTime(double time) {
+    	checkoutsAvailableTotalTime += (time - checkoutsAvailablePreviousTime) * availableCheckouts;
+		checkoutsAvailablePreviousTime = time;
     }
 }
 

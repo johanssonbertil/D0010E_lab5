@@ -14,6 +14,13 @@ import lab5.shopsimulator.shopevents.CloseEvent;
 public class Main {
 
 	public static void main(String[] args) {
+		method1();
+		
+		
+	}
+	
+	private static void method1() {
+		
 		int seed = 1234;
 		ExponentialRandomStream expR = new ExponentialRandomStream(1, seed); // Skapar alla instanser av objekt som används
 		UniformRandomStream uniPick = new UniformRandomStream(0.5, 1.0, seed);
@@ -25,7 +32,6 @@ public class Main {
 		sim.getEventQueue().add(new CloseEvent(state, 10.0, sim.getEventQueue()));
 		sim.getEventQueue().add(new StopEvent(state, 999, sim.getEventQueue()));
 		sim.run();
-		
 		
 	}
 	

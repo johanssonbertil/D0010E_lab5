@@ -1,7 +1,9 @@
 package lab5.shopsimulator.shopevents;
 
 import lab5.genericsimulator.EventQueue;
+import lab5.genericsimulator.Simulator;
 import lab5.genericsimulator.State;
+import lab5.genericsimulator.View;
 import lab5.shopsimulator.ShopState;
 import lab5.shopsimulator.customer.Customer;
 
@@ -23,14 +25,23 @@ public class PickUpEvent extends ShopEvent {
     	
     	shopState = ((ShopState)state);
     	
+    	
+    	
         if(shopState.checkOutAvailable()){
-        	shopState.updatecheckoutsAvailableTotalTime(this);
+        	
+        	shopState.updatecheckoutsAvailableTotalTime(time);
+        	shopState.updateObs(this);
         	
             PayEvent event = new PayEvent(state, shopState.uniPay.next() + time, eventQueue, customer);
             eventQueue.add(event);
+            shopState.customerGoesToCheckout();
             
         } else {
-        	shopState.updateTotalQueueingTime(this);
+        	shopState.updateTotalQueueingTime(time);
+        	shopState.updateObs(this);
+        	
+        	shopState.checkoutQueue.add(customer);
+            shopState.peopleWhoHaveQueued++;
         }
     }
 
@@ -38,20 +49,6 @@ public class PickUpEvent extends ShopEvent {
     public String name() {
         return "Plock";
     }
-	@Override
-	public void changeState() {
-		
-		shopState = ((ShopState)state);
-    	
-        if(shopState.checkOutAvailable()){
-        	
-        	shopState.customerGoesToCheckout();
-        	
-        } else{
-        	
-            shopState.checkoutQueue.add(customer);
-            shopState.peopleWhoHaveQueued++;
-        }
-		
-	}
+
+	
 }
