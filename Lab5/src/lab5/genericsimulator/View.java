@@ -35,7 +35,7 @@ public class View implements Observer{
 	public String headLine(){
 		return "PARAMETRAR \n" +
 				"========== \n" +
-		"Antal kassor, N..........:"+ shopState.totCheckouts + "\n"  +
+		"Antal kassor, N..........:"+ shopState.totalCheckouts + "\n"  +
 		"Max som ryms, M..........:" + shopState.maxCustomers + "\n" +
 		"Ankomshastighet, lambda..:" + shopState.expRNG.lambda + "\n" +
 		"Plocktider, [P_min..Pmax]:" + "["+ shopState.uniPick.lower + ".." + shopState.uniPick.upper +"]" + "\n" +
@@ -50,9 +50,10 @@ public class View implements Observer{
 		return "RESULTAT\n" + 
 				"========\n" + 
 				"1) Av " + shopState.totalCustomers + " kunder handlade " +
-				shopState.successfulCustomers + " medan " + shopState.customersLeft + " missades.\n" + 
+				shopState.successfulCustomers + " medan " + shopState.missedCustomers + " missades.\n" + 
 				"2) Total tid 2 kassor varit lediga: "+ df.format(shopState.checkoutsAvailableTotalTime) +" te.\n" + 
-				" Genomsnittlig ledig kassatid: "+ df.format(shopState.checkoutsAvailableTotalTime / shopState.totCheckouts)+" te (dvs "+ df.format(((shopState.checkoutsAvailableTotalTime / shopState.totCheckouts) / event.getTime()) * 100.00) + " % av tiden fr�n �ppning tills sista kunden\n" + 
+				" Genomsnittlig ledig kassatid: "+ df.format(shopState.checkoutsAvailableTotalTime / shopState.totalCheckouts)+
+				" te (dvs "+ df.format(((shopState.checkoutsAvailableTotalTime / shopState.totalCheckouts) / event.getTime()) * 100.00) + " % av tiden fr�n �ppning tills sista kunden\n" + 
 				"betalat).\n" + 
 				"3) Total tid "+ shopState.peopleWhoHaveQueued + " kunder tvingats köa: "+ df.format(shopState.totalQueuingTime) +  " te \n" + 
 				" Genomsnittlig kötid: "+ df.format(shopState.totalQueuingTime / shopState.peopleWhoHaveQueued) +" te.";
@@ -91,14 +92,14 @@ public class View implements Observer{
 					stringArr.add(lineBuilder(String.format("%-5s", df.format(shopEvent.getTime())), String.format("%-10s",shopEvent.name()), String.format("%-3s",shopEvent.customer.getID()),
 							String.format("%-5s",openString), String.format("%-5s",shopState.availableCheckouts),
 							String.format("%-5s",df.format(shopState.checkoutsAvailableTotalTime)), String.format("%-5s",shopState.currentCustomers),
-							String.format("%-3s",shopState.successfulCustomers), String.format("%-5s",shopState.customersLeft),
+							String.format("%-3s",shopState.successfulCustomers), String.format("%-5s",shopState.missedCustomers),
 							String.format("%-5s",shopState.peopleWhoHaveQueued), String.format("%-5s",df.format(shopState.totalQueuingTime)),
 							String.format("%-5s",shopState.checkoutQueue.getSize()) , shopState.checkoutQueue.toString2()));
 				} else {
 					stringArr.add(lineBuilder(String.format("%-5s",df.format(event.getTime())), String.format("%-10s",event.name()), String.format("%-3s","---"),
 							String.format("%-5s",openString), String.format("%-5s",shopState.availableCheckouts),
 							String.format("%-5s",df.format(shopState.checkoutsAvailableTotalTime)), String.format("%-5s",shopState.currentCustomers),
-							String.format("%-3s",shopState.successfulCustomers), String.format("%-5s",shopState.customersLeft),
+							String.format("%-3s",shopState.successfulCustomers), String.format("%-5s",shopState.missedCustomers),
 							String.format("%-5s",shopState.peopleWhoHaveQueued), String.format("%-5s",df.format(shopState.totalQueuingTime)),
 							String.format("%-5s",shopState.checkoutQueue.getSize()) , shopState.checkoutQueue.toString2()));
 				} 

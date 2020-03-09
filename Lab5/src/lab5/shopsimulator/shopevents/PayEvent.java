@@ -21,14 +21,9 @@ public class PayEvent extends ShopEvent {
     public void doEvent(){
     	shopState = ((ShopState)state);
     	
-    	
-    	
-    	if(shopState.checkOutAvailable()) {
-			shopState.updatecheckoutsAvailableTotalTime(time);
-		} else {
-			shopState.updateTotalQueueingTime(time);
-		}
-    	
+		shopState.updatecheckoutsAvailableTotalTime(time);
+		shopState.updateTotalQueueingTime(time);
+			
     	shopState.updateObs(this);
     	
     	

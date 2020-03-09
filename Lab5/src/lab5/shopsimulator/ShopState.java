@@ -9,10 +9,10 @@ import lab5.genericsimulator.random.UniformRandomStream;
 public class ShopState extends State {
     public int currentCustomers = 0;
     public int successfulCustomers = 0;
-    public int customersLeft = 0;
-    public final int maxCustomers = 5;
+    public int missedCustomers = 0;
+    public final int maxCustomers = 7;
     public int availableCheckouts;
-    public final int totCheckouts = 2;
+    public int totalCheckouts = 2;
     public  double closeTime;
     public double totalQueuingTime = 0;
     public int peopleWhoHaveQueued = 0;
@@ -29,13 +29,16 @@ public class ShopState extends State {
 	public int totalCustomers = 0;
 
 
-    public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1, UniformRandomStream uni2){
+    public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1, UniformRandomStream uni2, int checkouts){
     		super(maxT, exp, uni1);
     		uniPick = uni1;
     		uniPay = uni2;
     		cFactory = new CustomerFactory();
     		checkoutQueue = new FIFO();
-    		availableCheckouts = totCheckouts;
+    		totalCheckouts = checkouts;
+    		availableCheckouts = totalCheckouts;
+    		
+    
     }
 
     public boolean checkOutAvailable() {
@@ -56,7 +59,7 @@ public class ShopState extends State {
     	if(canEnter) {
 	    	if (currentCustomers >= maxCustomers) {
 	    		totalCustomers++;
-	    		customersLeft++;
+	    		missedCustomers++;
 	    		return false;
 	    		
 	    	}

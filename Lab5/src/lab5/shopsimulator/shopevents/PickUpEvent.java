@@ -25,11 +25,12 @@ public class PickUpEvent extends ShopEvent {
     	
     	shopState = ((ShopState)state);
     	
-    	
+    	shopState.updatecheckoutsAvailableTotalTime(time);
+    	shopState.updateTotalQueueingTime(time);
     	
         if(shopState.checkOutAvailable()){
         	
-        	shopState.updatecheckoutsAvailableTotalTime(time);
+        	
         	shopState.updateObs(this);
         	
             PayEvent event = new PayEvent(state, shopState.uniPay.next() + time, eventQueue, customer);
@@ -37,7 +38,7 @@ public class PickUpEvent extends ShopEvent {
             shopState.customerGoesToCheckout();
             
         } else {
-        	shopState.updateTotalQueueingTime(time);
+        	
         	shopState.updateObs(this);
         	
         	shopState.checkoutQueue.add(customer);

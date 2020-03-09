@@ -24,15 +24,12 @@ public class ArrivalEvent extends ShopEvent{
 		
 		
 		shopState = ((ShopState)state);
-
-		if (state.getRunning()) {
-			if(shopState.checkOutAvailable()) {
-				shopState.updatecheckoutsAvailableTotalTime(time);
-				
-			} else {
-				shopState.updateTotalQueueingTime(time);
-			}
+		
+		if(shopState.canEnter) {
 			
+			shopState.updatecheckoutsAvailableTotalTime(time);	
+			shopState.updateTotalQueueingTime(time);
+		
 		}
 		
 		shopState.updateObs(this);
