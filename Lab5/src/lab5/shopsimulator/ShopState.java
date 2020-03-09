@@ -10,7 +10,7 @@ public class ShopState extends State {
     public int currentCustomers = 0;
     public int successfulCustomers = 0;
     public int missedCustomers = 0;
-    public final int maxCustomers = 7;
+    public int maxCustomers = 12;
     public int availableCheckouts;
     public int totalCheckouts = 2;
     public  double closeTime;
@@ -23,13 +23,14 @@ public class ShopState extends State {
     public double checkoutsAvailableTotalTime = 0;
     public double checkoutsAvailablePreviousTime = 0;
 
+    public ShopView view;
     public CustomerFactory cFactory;
     public FIFO checkoutQueue;
     public UniformRandomStream uniPick, uniPay;
 	public int totalCustomers = 0;
 
 
-    public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1, UniformRandomStream uni2, int checkouts){
+    public ShopState(double maxT, ExponentialRandomStream exp, UniformRandomStream uni1, UniformRandomStream uni2, int checkouts, int maxCustomer){
     		super(maxT, exp, uni1);
     		uniPick = uni1;
     		uniPay = uni2;
@@ -37,7 +38,11 @@ public class ShopState extends State {
     		checkoutQueue = new FIFO();
     		totalCheckouts = checkouts;
     		availableCheckouts = totalCheckouts;
-    		
+    		checkoutsAvailableTotalTime = 0;
+    	    checkoutsAvailablePreviousTime = 0;
+    	    this.maxCustomers = maxCustomer;
+    	    this.view = new ShopView(this);
+    	    this.addObserver(view);
     
     }
 

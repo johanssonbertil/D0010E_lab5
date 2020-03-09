@@ -3,8 +3,8 @@ package lab5.shopsimulator.shopevents;
 import lab5.genericsimulator.EventQueue;
 import lab5.genericsimulator.Simulator;
 import lab5.genericsimulator.State;
-import lab5.genericsimulator.View;
 import lab5.shopsimulator.ShopState;
+import lab5.shopsimulator.ShopView;
 import lab5.shopsimulator.customer.Customer;
 
 

@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import lab5.genericsimulator.random.*;
+import lab5.shopsimulator.ShopView;
 
 
 
@@ -22,8 +23,7 @@ public abstract class State extends Observable {
     	maxTime = maxT;
     	expRNG = exp;
     	uniRNG = uni1;
-    	view = new View(this);
-    	this.addObserver(view);
+    	
     }
     
     
